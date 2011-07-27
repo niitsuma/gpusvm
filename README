@@ -1,0 +1,19 @@
+GPUSVM, version 0.2
+
+This software is an implementation of Support Vector Machine training
+and classification using Nvidia Graphics Processors.  The software
+builds under linux, with gcc 4.4.3 and nvcc 3.2. 
+
+The build process assumes that cuda is installed in /usr/local/cuda,
+and that the CUDA SDK is installed at ~/cuda.  If this is not the
+case, set your CUDA_INSTALL_PATH and CUDA_SDK_PATH variables
+appropriately.
+
+Also, if you are compiling this for Fermi devices, make sure to set
+your SMVERSIONFLAGS environment variable to "-arch sm_20".  We have
+seen unexplained segmentation faults when running this code compiled
+for earlier architectures on Fermi devices.
+
+Please report bugs and problems to bcatanzaro@nvidia.com or
+narayans@eecs.berkeley.edu.
+
