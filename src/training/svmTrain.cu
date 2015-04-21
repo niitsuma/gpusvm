@@ -1,6 +1,10 @@
 #include "svmTrain.h"
 #include "cuda.h"
-#include "cutil.h"
+
+//#include "cutil.h"
+#include <helper_cuda.h>
+#define CUDA_SAFE_CALL checkCudaErrors
+
 #include "../common/framework.h"
 #include "../common/deviceSelect.h"
 #include "Cache.h"
@@ -9,6 +13,8 @@
 #include "initialize.h"
 #include "firstOrder.h"
 #include "secondOrder.h"
+
+
 
 void formModel(float* trainingPoints, int nTrainingPoints, int nDimension, float* trainingAlpha, float* trainingLabels, float** supportVectors, int* nSV, float** alpha, float epsilon) {
   int count = 0;

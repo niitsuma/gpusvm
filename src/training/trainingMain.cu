@@ -2,7 +2,11 @@
 #include <stdio.h>   
 #include <math.h>
 #include <string.h>
-#include <cutil.h>
+//#include <cutil.h>
+#include <helper_cuda.h>
+
+#define CUDA_SAFE_CALL checkCudaErrors
+
 #include <cuda.h>
 #include <getopt.h>
 #include <stdlib.h>
@@ -11,6 +15,7 @@
 #include "../common/svmIO.h"
 #include "../common/framework.h"
 #include "kernelType.h"
+
 
 
 void performTraining(float* data, int nPoints, int nDimension, float* labels, float** p_alpha, Kernel_params* kp, float cost, SelectionHeuristic heuristicMethod, float epsilon, float tolerance, float* transposedData);

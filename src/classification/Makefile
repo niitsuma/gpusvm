@@ -21,7 +21,8 @@ LINKCUFILES := deviceSelect.cu
 ifeq ($(emu),1)
         LIB             := -lcublasemu
 else
-        LIB             := -lcublas -lblas
+        #LIB             := -lcublas -lblas
+        LIB             := -lcublas -lopenblas
 endif
 
 ################################################################################

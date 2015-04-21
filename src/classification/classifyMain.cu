@@ -5,7 +5,12 @@
 #include <sys/time.h>
 /* Includes, cuda */
 #include "cublas.h"
-#include "cutil.h"
+
+//#include "cutil.h"
+#include <helper_cuda.h>
+#define CUDA_SAFE_CALL checkCudaErrors
+
+
 #include "cuda.h"
 
 /* Includes, project */

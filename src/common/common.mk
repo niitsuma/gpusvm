@@ -53,7 +53,8 @@ ifeq ($(USEGLLIB),1)
 endif
 
 # Libs
-LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lblas ${OPENGLLIB} ${LIB}
+#LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lblas ${OPENGLLIB} ${LIB}
+LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lopenblas ${OPENGLLIB} ${LIB}
 
 # Warning flags
 CXXWARN_FLAGS := \
@@ -140,8 +141,8 @@ ifneq ($(STATIC_LIB),)
 	TARGET   := $(subst .a,$(LIBSUFFIX).a,$(LIBDIR)/$(STATIC_LIB))
 	LINKLINE  = ar qv $(TARGET) $(OBJS) 
 else
-	LIB += -lcutil$(LIBSUFFIX)
-	# Device emulation configuration
+	#LIB += -lcutil$(LIBSUFFIX)
+	## Device emulation configuration
 	ifeq ($(emu), 1)
 		NVCCFLAGS   += -deviceemu
 		CUDACCFLAGS += 
