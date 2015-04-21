@@ -18,11 +18,23 @@ CCFILES		  :=
 LINKCCFILES := svmIO.cpp 
 LINKCUFILES := deviceSelect.cu
 
+
+LIB_OPENBLAS_OPENMP := $(strip $(wildcard /usr/lib/libopenblas_openmp.so))
+LIB_OPENBLAS         := $(strip $(wildcard /usr/lib/libopenblas.so))
+ifneq ($(LIB_OPENBLAS_OPENMP),)
+    LIBBLAS = "-lopenblas_openmp"
+else ifneq  ($(LIB_OPENBLAS),)
+    LIBBLAS = "-lopenblas"
+else
+    LIBBLAS = "-lblas"
+endif
+
+
 ifeq ($(emu),1)
         LIB             := -lcublasemu
 else
         #LIB             := -lcublas -lblas
-        LIB             := -lcublas -lopenblas
+        LIB             := -lcublas $(LIBBLAS)
 endif
 
 ################################################################################

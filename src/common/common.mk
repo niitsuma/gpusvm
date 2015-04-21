@@ -6,14 +6,15 @@
 
 .SUFFIXES : .cu .cu_dbg_o .c_dbg_o .cpp_dbg_o .cu_rel_o .c_rel_o .cpp_rel_o .cubin
 
-CUDA_INSTALL_PATH ?= /usr/local/cuda
+#CUDA_INSTALL_PATH ?= /usr/local/cuda
+CUDA_INSTALL_PATH ?= /opt/cuda ##gentoo
 
 ifdef cuda-install
 	CUDA_INSTALL_PATH := $(cuda-install)
 endif
 
 #CUDA_SDK_PATH ?= $(HOME)/cuda
-CUDA_SDK_PATH ?= $(CUDA_SDK_PATH)/sdk
+CUDA_SDK_PATH ?= $(CUDA_INSTALL_PATH)/sdk  ##gentoo
 
 # Basic directory setup for SDK
 # (override directories only if they are not already defined)
@@ -25,8 +26,12 @@ ROOTOBJDIR ?= $(ROOTDIR)/obj
 ROOTSODIR  ?= $(ROOTDIR)/lib
 SODIR      ?= $(ROOTSODIR)/linux
 
+
+
 #LIBDIR     := $(CUDA_SDK_PATH)/C/lib
-LIBDIR     := $(CUDA_INSTALL_PATH)/lib64
+
+ARCH := $(shell getconf LONG_BIT)
+LIBDIR     := $(CUDA_INSTALL_PATH)/lib$(ARCH)
 #COMMONDIR  := $(CUDA_SDK_PATH)/C/common
 #COMMONDIR  := $(CUDA_INSTALL_PATH)/common
 
@@ -56,9 +61,21 @@ ifeq ($(USEGLLIB),1)
 
 endif
 
+LIB_OPENBLAS_OPENMP := $(strip $(wildcard /usr/lib/libopenblas_openmp.so))
+LIB_OPENBLAS         := $(strip $(wildcard /usr/lib/libopenblas.so))
+ifneq ($(LIB_OPENBLAS_OPENMP),)
+    LIBBLAS = "-lopenblas_openmp"
+else ifneq  ($(LIB_OPENBLAS),)
+    LIBBLAS = "-lopenblas"
+else
+    LIBBLAS = "-lblas"
+endif
+
+
 # Libs
 #LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lblas ${OPENGLLIB} ${LIB}
-LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -lcuda -lcudart -lopenblas ${OPENGLLIB} ${LIB}
+LIB       := -L$(LIBDIR) -lcuda -lcudart $(LIBBLAS) ${OPENGLLIB} ${LIB}
+#LIB       := -L$(LIBDIR) -lcuda -lcudart -lopenblas_openmp ${OPENGLLIB} ${LIB}
 
 # Warning flags
 CXXWARN_FLAGS := \
