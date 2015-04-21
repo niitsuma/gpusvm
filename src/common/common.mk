@@ -12,7 +12,8 @@ ifdef cuda-install
 	CUDA_INSTALL_PATH := $(cuda-install)
 endif
 
-CUDA_SDK_PATH ?= $(HOME)/cuda
+#CUDA_SDK_PATH ?= $(HOME)/cuda
+CUDA_SDK_PATH ?= $(CUDA_SDK_PATH)/sdk
 
 # Basic directory setup for SDK
 # (override directories only if they are not already defined)
@@ -24,8 +25,10 @@ ROOTOBJDIR ?= $(ROOTDIR)/obj
 ROOTSODIR  ?= $(ROOTDIR)/lib
 SODIR      ?= $(ROOTSODIR)/linux
 
-LIBDIR     := $(CUDA_SDK_PATH)/C/lib 
-COMMONDIR  := $(CUDA_SDK_PATH)/C/common
+#LIBDIR     := $(CUDA_SDK_PATH)/C/lib
+LIBDIR     := $(CUDA_INSTALL_PATH)/lib64
+#COMMONDIR  := $(CUDA_SDK_PATH)/C/common
+#COMMONDIR  := $(CUDA_INSTALL_PATH)/common
 
 # Compilers
 NVCC       := nvcc 
@@ -34,7 +37,8 @@ CC         := gcc
 LINK       := g++
 
 # Includes
-INCLUDES  += -I. -I$(CUDA_INSTALL_PATH)/include -I$(COMMONDIR)/inc -I$(ROOTDIR)/include
+INCLUDES  += -I. -I$(CUDA_INSTALL_PATH)/include -I$(ROOTDIR)/include -I$(CUDA_INSTALL_PATH)/sdk/common/inc -I$(CUDA_INSTALL_PATH)/samples/common/inc
+
 
 
 # OpenGL is used or not (if it is used, then it is necessary to include GLEW)
@@ -54,7 +58,7 @@ endif
 
 # Libs
 #LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lblas ${OPENGLLIB} ${LIB}
-LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -L$(COMMONDIR)/lib -lcuda -lcudart -lopenblas ${OPENGLLIB} ${LIB}
+LIB       := -L$(CUDA_INSTALL_PATH)/lib64 -L$(LIBDIR) -lcuda -lcudart -lopenblas ${OPENGLLIB} ${LIB}
 
 # Warning flags
 CXXWARN_FLAGS := \
