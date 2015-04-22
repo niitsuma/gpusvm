@@ -166,6 +166,7 @@ int readSvm(const char* filename, float** p_data, float** p_labels, int* p_npoin
 		return 0;
 	}
 	int npoints = 0;
+	int dimension_current = 0;
 	int dimension = 0;
 	char c;
 	char firstLine = 1;
@@ -175,11 +176,17 @@ int readSvm(const char* filename, float** p_data, float** p_labels, int* p_npoin
 		case '\n':
 			npoints++;
 			firstLine = 0;
+			if( dimension_current >  dimension ){
+			  dimension=dimension_current;
+			  //printf("dim update: %d\n",dimension);
+			}
+			dimension_current=0;
 			break;
 		case ':':
 			if (firstLine > 0) {
 				dimension++;
 			}
+			dimension_current++;
 		default:
 			;
 		}
