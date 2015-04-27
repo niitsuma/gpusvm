@@ -270,8 +270,10 @@ void performTraining(float* data, int nPoints, int nDimension, float* labels, fl
 
   
   printf("Starting iterations\n");
-	
-  for (iteration = 1; true; iteration++) {
+
+  //for (iteration = 1; true; iteration++) {
+  //max iter set
+  for (iteration = 1; 1000000  ; iteration++) {
 	
     if (bLow <= bHigh + 2*tolerance) {
       printf("Converged\n");

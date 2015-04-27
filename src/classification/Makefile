@@ -5,7 +5,8 @@
 ################################################################################
 
 # Add source files here
-EXECUTABLE	:= svmClassify
+#EXECUTABLE	:= svmClassify
+EXECUTABLE	:= svm2classcudapredict
 # Cuda source files (compiled with cudacc)
 ifeq ($(shared),1)
 	CUFILES		:= svmClassify.cu svmClassifyKernels.cu

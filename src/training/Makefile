@@ -5,7 +5,8 @@
 ################################################################################
 
 # Add source files here
-EXECUTABLE	:= svmTrain
+#EXECUTABLE	:= svmTrain
+EXECUTABLE	:= svm2classcudatrain
 CUFILES   := trainingMain.cu svmTrain.cu
 # C/C++ source files (compiled with gcc / c++)
 CCFILES		:= Cache.cpp Controller.cpp

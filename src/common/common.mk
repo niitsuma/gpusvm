@@ -31,9 +31,14 @@ SODIR      ?= $(ROOTSODIR)/linux
 #LIBDIR     := $(CUDA_SDK_PATH)/C/lib
 
 ARCH := $(shell getconf LONG_BIT)
-LIBDIR     := $(CUDA_INSTALL_PATH)/lib$(ARCH)
+#LIBDIR     := $(CUDA_INSTALL_PATH)/lib$(ARCH)
 #COMMONDIR  := $(CUDA_SDK_PATH)/C/common
 #COMMONDIR  := $(CUDA_INSTALL_PATH)/common
+ifeq ($(ARCH), 32)
+LIBDIR = $(CUDA_INSTALL_PATH)/lib/
+else
+LIBDIR = $(CUDA_INSTALL_PATH)/lib64/
+endif
 
 # Compilers
 NVCC       := nvcc 
