@@ -24,8 +24,11 @@ class ClassifySVM2ClassCuda(BaseEstimator, ClassifierMixin):
                  ,C=1
                  ,kernel='rbf'
                  ,gamma=1
-                 ,tol=0.001
+                 #,tol=0.001
+                 ,tol=0.1
                  ,max_iter=1000000
+                 #,epsilon=1e-4
+                 ,epsilon=1e-2
                  ):
         argdict= locals()
         argdict.pop('argdict',None)
@@ -44,7 +47,7 @@ class ClassifySVM2ClassCuda(BaseEstimator, ClassifierMixin):
         
         t_str='--gaussian'
         #self.param_str=' {0} -c {1} -g {2} -t 0.01 -e 1e-4'.format(t_str,C,gamma)
-        self.param_str=' {0} -c {1} -g {2} -t 0.1 -e 1e-3'.format(t_str,C,gamma)        
+        self.param_str=' {0} -c {1} -g {2} -t {3} -e {4}'.format(t_str,C,gamma,tol,epsilon)        
 
         self.predict_fname=' '
         self.test_fname=' '
@@ -285,7 +288,7 @@ def main():
 
     
 if __name__ == '__main__':
-    print 'main'
+    #print 'main'
     main()
 
     
